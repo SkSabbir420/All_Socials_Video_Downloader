@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "155651462251",
+    "project_id": "all-socials-video-downloader",
+    "storage_bucket": "all-socials-video-downloader.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155651462251:android:e756546d3b9fc3d6038d2e",
+        "android_client_info": {
+          "package_name": "com.erickruo.allinonevideodownloader"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfMtLw2_SA49-SXguLBU6N3CFGfA_74Xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

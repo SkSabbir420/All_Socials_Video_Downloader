@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Syed Usama Ahmad on 2/27/23, 1:22 AM
+  ~  * Copyright (c) 2023 . All rights reserved.
+  ~  * Last modified 2/26/23, 11:13 PM
+  ~  */
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.InstagramBulkDownloaderSearch">
+
+    <TextView
+        android:id="@+id/videomorelist_btn"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/youneedloginfirest"
+        android:textColor="@color/md_white_1000"
+        android:textSize="13sp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:visibility="visible" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="8dp">
+
+        <TextView
+            android:id="@+id/txt_search_click"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingStart="40dp"
+            android:hint="@string/search_a_username" />
+
+        <SearchView
+            android:id="@+id/searchinstaprofile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/MaterialSearchViewStyle"
+            app:queryHint="@string/search_a_username" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/as_of_the_new_api_update_you_can_use_the_bilk_downloader_only_if_your_account_is_logged_in"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

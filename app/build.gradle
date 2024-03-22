@@ -1,0 +1,316 @@
+/*
+ * *
+ *  * Created by Syed Usama Ahmad on 1/13/23, 11:25 PM
+ *  * Copyright (c) 2023 . All rights reserved.
+ *  * Last modified 1/13/23, 11:21 PM
+ *
+ */
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'kotlin-kapt'
+
+
+android {
+
+    useLibrary 'org.apache.http.legacy'
+
+    compileSdkVersion 34
+
+    namespace "com.erickruo.allinonevideodownloader"
+
+    defaultConfig {
+        resConfigs 'ar', 'hi-rIN', 'pt-rBR', 'zh', 'tr-rTR', 'ur-rPK', 'de', 'en', 'fr'
+
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+
+        applicationId "com.erickruo.allinonevideodownloader"
+
+        minSdkVersion 23
+        targetSdkVersion 34
+        versionCode 3
+        versionName "1.0.2"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        ndk.abiFilters "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
+
+        android.ndkVersion '25.0.8775105'
+        ndk {
+            debugSymbolLevel 'FULL'
+        }
+
+//        resValue "string", "FACEBOOK_APP_ID", "kjhhkk"
+
+        //TODO Enter Your Purchase Code Here. like this ('"00000-000-000-00000-000"') below.
+        // To Get Purchase Code Open Downloads Sections and Download the License
+        // link: https://codecanyon.net/downloads
+        // https://help.market.envato.com/hc/en-us/articles/202822600-Where-Is-My-Purchase-Code-
+        buildConfigField "String", "PURCHASE_CODE", '"YOUR_PURCHASE_CODE_HERE"'
+
+
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+
+    buildTypes {
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [crashlytics: "true"]
+            buildConfigField "boolean", "ISPRO", "false"
+        }
+
+        debug {
+            manifestPlaceholders = [crashlytics: "false"]
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
+            buildConfigField "boolean", "ISPRO", "false"
+        }
+
+
+    }
+    packagingOptions {
+        resources {
+            excludes += ['mozilla/public-suffix-list.txt', 'META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0', 'META-INF/*.kotlin_module']
+        }
+        jniLibs.useLegacyPackaging = true
+    }
+
+
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+//    kotlinOptions {
+//        jvmTarget = 11
+//    }
+
+    kotlin {
+        jvmToolchain {
+            languageVersion.set(JavaLanguageVersion.of("11"))
+        }
+    }
+
+    lint {
+        disable 'ResourceType'
+    }
+
+//TODO Un comment this if you want to generate 64bit APK File
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+            universalApk true
+        }
+    }
+
+
+    dependencies {
+        //default libraries
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+        implementation 'androidx.cardview:cardview:1.0.0'
+        implementation 'androidx.multidex:multidex:2.0.1'
+
+        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+
+        //custom circle imageview
+        implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+        //Network data fetcher
+        implementation 'org.jsoup:jsoup:1.14.2'
+
+        //image loading library
+        implementation 'com.github.bumptech.glide:glide:4.15.1'
+        implementation 'com.github.bumptech.glide:annotations:4.15.1'
+        implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+        annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
+        kapt 'com.github.bumptech.glide:compiler:4.15.1'
+
+        //navigation
+        implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
+
+//        implementation  'io.ak1:bubbletabbar:1.0.8'
+
+
+        //All ads network libraries
+        configurations {
+            all {
+                exclude group: 'com.google.android.gms', module: 'play-services-ads'
+            }
+        }
+        implementation 'com.google.android.gms:play-services-ads-lite:22.4.0'
+//        implementation 'com.google.android.gms:play-services-ads:21.5.0'
+        implementation 'com.google.ads.mediation:facebook:6.16.0.0'
+        implementation 'com.facebook.infer.annotation:infer-annotation:0.18.0'
+        implementation 'androidx.annotation:annotation:1.7.0'
+        implementation 'com.google.android.ump:user-messaging-platform:2.1.0'
+
+        //app open ads
+        configurations {
+            all {
+                exclude group: 'androidx.lifecycle', module: 'lifecycle-viewmodel-ktx'
+            }
+        }
+        implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+        implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
+        implementation 'androidx.lifecycle:lifecycle-process:2.6.2'
+
+        //noinspection LifecycleAnnotationProcessorWithJava8
+        kapt "androidx.lifecycle:lifecycle-common-java8:2.6.2"
+
+        // For Java
+        implementation 'androidx.work:work-runtime:2.8.1'
+
+        // For Kotlin
+        implementation 'androidx.work:work-runtime-ktx:2.8.1'
+
+        //custom toast library
+        implementation 'com.github.GrenderG:Toasty:1.5.0'
+
+//        implementation 'org.apache.commons:commons-lang3:3.10'
+        implementation 'org.apache.commons:commons-text:1.9'
+        implementation 'commons-io:commons-io:2.9.0'
+
+        //live video wallpaper
+        implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
+        //Ads consent
+        //implementation 'com.google.android.ump:user-messaging-platform:2.0.0'
+
+        //rating dialog
+        implementation 'com.codemybrainsout.rating:ratingdialog:1.0.8'
+
+        //Network call library
+        implementation 'com.amitshekhar.android:android-networking:1.0.2'
+
+        //video download url fetcher
+        implementation 'com.github.KhunHtetzNaing:xGetter:3.0'
+
+        //rest api retrofit
+        implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+        implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+        implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+        // define any required OkHttp artifacts without version
+        implementation 'com.squareup.okhttp3:logging-interceptor'
+        implementation 'com.squareup.okhttp3:okhttp'
+        implementation 'com.squareup.okhttp3:okhttp-urlconnection'
+
+        //cookies
+        implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+
+        //Rounded ImageView library
+        implementation 'com.makeramen:roundedimageview:2.3.0'
+
+        //in-app billing library
+        implementation "com.android.billingclient:billing-ktx:6.0.1"
+        implementation "com.android.billingclient:billing:6.0.1"
+        implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+        implementation 'com.google.guava:guava:24.1-jre'
+
+        //push notification onesignal
+        implementation 'com.onesignal:OneSignal:4.8.6'
+
+        //firebase analytics and crash
+        implementation platform('com.google.firebase:firebase-bom:32.2.0')
+        implementation 'com.google.firebase:firebase-crashlytics'
+        implementation 'com.google.firebase:firebase-analytics'
+        implementation 'com.google.firebase:firebase-perf'
+        implementation 'com.google.firebase:firebase-config'
+
+
+        //push notification firebase
+        implementation 'com.google.firebase:firebase-messaging:23.2.1'
+
+        //video view
+        implementation 'com.linsea:universalvideoview:1.1.0@aar'
+
+        //A tool to bypass the Cloudflare DDOS page.
+//        implementation 'com.zhkrb.cloudflare-scrape-android:scrape-webview:0.0.4'
+//        implementation 'com.github.mozilla:rhino:Rhino1_7_11_Release'
+//        implementation 'com.eclipsesource.j2v8:j2v8:4.5.0@aar'
+
+        //ratingDialog
+        implementation 'com.suddenh4x.ratingdialog:awesome-app-rating:2.4.0'
+
+        //PiracyChecker
+        implementation 'com.github.javiersantos:PiracyChecker:1.2.8'
+
+        //sliderView
+        implementation 'com.github.smarteist:autoimageslider:1.4.0'
+
+        //Biometric
+        implementation 'androidx.biometric:biometric:1.1.0'
+
+        //photoview
+        implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+        //custom chrome tabs
+        implementation 'androidx.browser:browser:1.6.0'
+        //new splashscreen
+        implementation 'androidx.core:core-splashscreen:1.0.1'
+
+        implementation "androidx.webkit:webkit:1.8.0"
+
+        implementation "androidx.window:window-java:1.1.0"
+        implementation "androidx.window:window:1.1.0"
+
+
+        implementation project(":library")
+        implementation project(":ffmpeg")
+        implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+//        implementation 'com.github.yausername.youtubedl-android:library:-SNAPSHOT'
+//        implementation 'com.github.yausername.youtubedl-android:ffmpeg:-SNAPSHOT' // Optional
+//        implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+
+
+//      implementation 'com.github.instagram4j:instagram4j:master-SNAPSHOT'
+//        implementation 'com.google.android.exoplayer:exoplayer:2.18.3'
+        //https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8
+        implementation 'com.auth0.android:jwtdecode:2.0.2'
+
+
+    }
+
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.play:app-update:2.1.0'
+    configurations {
+        all {
+            exclude group: 'com.google.android.play', module: 'core'
+        }
+    }
+
+}

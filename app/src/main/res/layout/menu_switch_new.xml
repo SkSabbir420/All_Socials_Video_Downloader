@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Syed Usama Ahmad on 2/27/23, 1:22 AM
+  ~  * Copyright (c) 2023 . All rights reserved.
+  ~  * Last modified 2/26/23, 11:13 PM
+  ~  */
+  -->
+
+<androidx.appcompat.widget.SwitchCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@null"
+    android:button="@drawable/custom_switch_gallery_new"
+    android:thumb="@null"
+    android:padding="8dp"
+    app:track="@null" />
